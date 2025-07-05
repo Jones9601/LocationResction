@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Attendance Check</title>
+</head>
+
+<body>
+    <h2>Checking your location...</h2>
+    <script>
+        const allowedLat = 13.0827;
+        const allowedLng = 80.2707;
+        const maxDistanceMeters = 2000000;
+
+        function getDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371e3;
+            const toRad = angle => angle * Math.PI / 180;
+            const dLat = toRad(lat2 - lat1);
+            const dLon = toRad(lon2 - lon1);
+            const a = Math.sin(dLat / 2) ** 2 +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        navigator.geolocation.getCurrentPosition(position => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const distance = getDistance(lat, lon, allowedLat, allowedLng);
+            if (distance <= maxDistanceMeters) {
+                window.location.href = "https://forms.gle/abc123"; // Your Google Form
+            } else {
+                document.body.innerHTML = "<h3>You are not within the required location.</h3>";
+            }
+        }, err => {
+            document.body.innerHTML = "<h3>Location access is required to verify attendance.</h3>";
+        });
+    </script>
+</body>
+
+</html>
