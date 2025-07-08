@@ -28,11 +28,12 @@
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             const distance = getDistance(lat, lon, allowedLat, allowedLng);
-            if (distance <= maxDistanceMeters) {
-                window.location.href = "https://forms.gle/abc123"; // Your Google Form
-            } else {
-                document.body.innerHTML = "<h3>You are not within the required location.</h3>";
-            }
+            document.body.innerHTML = `<h3>Your location: ${lat}, ${lon}</h3>`;
+            // if (distance <= maxDistanceMeters) {
+            //     window.location.href = "https://forms.gle/abc123"; // Your Google Form
+            // } else {
+            //     document.body.innerHTML = "<h3>You are not within the required location.</h3>";
+            // }
         }, err => {
             document.body.innerHTML = "<h3>Location access is required to verify attendance.</h3>";
         });
